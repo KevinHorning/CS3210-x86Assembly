@@ -1,0 +1,102 @@
+Microsoft (R) Macro Assembler Version 14.15.26730.0	    10/19/19 13:22:06
+Horning2.asm						     Page 1 - 1
+
+
+				;Kevin Horning
+				;CSC 3210
+				;Assignment 5 Problem 2
+				;Uses loop and indirect addressing to reverse elements 
+				;in an list in place
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 0002 0001 0004		list WORD 2,1,4,3,6,5,8,7
+	   0003 0006 0005
+	   0008 0007
+ 00000000			.code
+ 00000000			main proc
+ 00000000  B9 00000008			mov ecx, LENGTHOF list
+ 00000005				L1:
+ 00000005  B8 00000000				mov eax, 0				;gives new index (edx)
+ 0000000A  66| B8 0002				mov ax, TYPE list
+ 0000000E  BB 00000008				mov ebx, LENGTHOF list
+ 00000013  2B D9				sub ebx, ecx
+ 00000015  F7 E3				mul ebx
+ 00000017  8B D0				mov edx, eax
+
+ 00000019  66| 8B 82				mov ax, list[edx]		;makes ax and bx the next 2 elements
+	   00000000 R
+ 00000020  80 C2 02				add dl, TYPE list		
+ 00000023  66| 8B 9A				mov bx, list[edx]	
+	   00000000 R
+ 0000002A  66| 93				XCHG ax, bx				
+									
+ 0000002C  66| 89 9A				mov list[edx], bx		;switches the two elements in the list
+	   00000000 R
+ 00000033  80 EA 02				sub dl, TYPE list
+ 00000036  66| 89 82				mov list[edx], ax
+	   00000000 R
+
+ 0000003D  FE C9				dec cl					;makes counter to decrease by 2 (2 elements)
+ 0000003F  E2 C4				LOOP L1	
+
+ 00000041  66| A1			mov ax, list[0]				;testing
+	   00000000 R
+ 00000047  66| 8B 1D			mov bx, list[2]
+	   00000002 R
+ 0000004E  66| 8B 0D			mov cx, list[4]
+	   00000004 R
+ 00000055  66| 8B 15			mov dx, list[6]
+	   00000006 R
+
+					invoke ExitProcess,0
+ 0000005C  6A 00	   *	    push   +000000000h
+ 0000005E  E8 00000000 E   *	    call   ExitProcess
+ 00000063			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.15.26730.0	    10/19/19 13:22:06
+Horning2.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000010 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000063 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000063 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 00000005 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+list . . . . . . . . . . . . . .	Word	 00000000 _DATA	
+
+	   0 Warnings
+	   0 Errors

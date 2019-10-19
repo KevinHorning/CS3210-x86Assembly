@@ -1,0 +1,81 @@
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    04/13/18 11:27:39
+Horning1.asm						     Page 1 - 1
+
+
+				;Kevin Horning
+				;CSC 3210
+				;Assignment 5 Problem 1
+				;Defines two 64-bit values and finds the sum of all of
+				;their DWORDS and explains validity of result 
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000				val1 QWORD 0506030704080102h
+	   0506030704080102
+ 00000008				val2 QWORD 1122334455667788h
+	   1122334455667788
+ 00000000			.code
+ 00000000			main proc
+ 00000000  A1 00000000 R		mov eax, DWORD PTR val1			;lower half of val1
+ 00000005  8B 1D 00000004 R		mov ebx, DWORD PTR val1 + 4		;upper half of val1
+ 0000000B  8B 0D 00000008 R		mov ecx, DWORD PTR val2			;lower half of val2
+ 00000011  8B 15 0000000C R		mov edx, DWORD PTR val2 + 4		;upper half of val2
+
+ 00000017  03 C1			add eax, ecx					;adds 2 lower halves
+ 00000019  03 DA			add ebx, edx					;adds 2 upper halves
+ 0000001B  03 C3			add eax, ebx					;adds the sums for grand total
+
+				;for the task of finding the sum of all the DWORDS in the 
+				;given QWORDS, the result (stored in eax), is valid
+
+					invoke ExitProcess,0
+ 0000001D  6A 00	   *	    push   +000000000h
+ 0000001F  E8 00000000 E   *	    call   ExitProcess
+ 00000024			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    04/13/18 11:27:39
+Horning1.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000010 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000024 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000024 Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+val1 . . . . . . . . . . . . . .	QWord	 00000000 _DATA	
+val2 . . . . . . . . . . . . . .	QWord	 00000008 _DATA	
+
+	   0 Warnings
+	   0 Errors

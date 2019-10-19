@@ -1,0 +1,4 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Assignment1.vcxproj, Project.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Assembling Horning1.asm...
+  Project.vcxproj -> D:\Coding\Assembly\Assignment4.1\Debug\Practice.exe
+  Project.vcxproj -> D:\Coding\Assembly\Assignment4.1\Debug\Practice.pdb (Full PDB)
