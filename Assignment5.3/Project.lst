@@ -1,0 +1,96 @@
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    03/18/18 13:39:22
+Horning3.asm						     Page 1 - 1
+
+
+				;Kevin Horning
+				;CSC 3210
+				;Assignment 5 Problem 3
+				;Practice with nested loops, adds the two counters
+				;and stores the sum in a list for every iteration
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 0000				firstCounter WORD ?
+ 00000002 0000				listIndex WORD 0
+ 00000004  00000032 [			sumList WORD 50 DUP(?)
+	    0000
+	   ]
+ 00000000			.code
+ 00000000			main proc					
+ 00000000  B9 00000004			mov ecx, 4					
+ 00000005				L1:
+ 00000005  66| 89 0D				mov firstCounter, cx
+	   00000000 R
+ 0000000C  B9 00000005				mov ecx, 5					
+ 00000011					L2: 
+ 00000011  66| A1					mov ax, firstCounter
+	   00000000 R
+ 00000017  66| 03 C1					add ax, cx				;adds 2 counters
+
+ 0000001A  42						inc edx
+
+ 0000001B  66| 8B 1D					mov bx, listIndex		;offset of list index
+	   00000002 R
+ 00000022  66| 89 83					mov [sumList + bx], ax	;moves sum to index
+	   00000004 R
+ 00000029  66| 83 05					add listIndex, 2		;increases index
+	   00000002 R 02
+ 00000031  E2 DE					Loop L2
+ 00000033  66| 8B 0D				mov cx, firstCounter
+	   00000000 R
+ 0000003A  E2 C9				Loop L1
+
+					invoke ExitProcess,0
+ 0000003C  6A 00	   *	    push   +000000000h
+ 0000003E  E8 00000000 E   *	    call   ExitProcess
+ 00000043			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    03/18/18 13:39:22
+Horning3.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000068 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000043 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000043 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 00000005 _TEXT	
+  L2 . . . . . . . . . . . . . .	L Near	 00000011 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+firstCounter . . . . . . . . . .	Word	 00000000 _DATA	
+listIndex  . . . . . . . . . . .	Word	 00000002 _DATA	
+sumList  . . . . . . . . . . . .	Word	 00000004 _DATA	
+
+	   0 Warnings
+	   0 Errors
